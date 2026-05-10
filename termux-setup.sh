@@ -72,21 +72,33 @@ copy() {
   local src="$1"
   local dest="$2"
   if [ -f "$dest" ]; then
-    echo "File $dest already exists. Skipping copy."
+    echo "File $dest already exists. Skipping copy ..."
   else
     cp "$src" "$dest"
     echo "Copied $src to $dest"
   fi
 }
 
+write_to_file() {
+  local file="$1"
+  local pattern="$2"
+  if grep -qF "$pattern" "$file" 2>/dev/null; then
+    echo "Content already written to $file. Skipping ..."
+  else
+    cat >> "$file"
+    echo "Written in: $file"
+  fi
+}
+
 copy ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
 mkdir -p ~/.config/tmux
-cat > ~/.config/tmux/tmux.conf << EOF
+
+write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
 EOF
 
-cat >> ~/.termux/termux.properties << EOF
+write_to_file ~/.termux/termux.properties "shortcut.create-session" << EOF
 shortcut.create-session = ctrl + t
 shortcut.previous-session = ctrl + (
 shortcut.next-session = ctrl + )
@@ -108,4 +120,3 @@ fi
 
 touch ~/.hushlogin
 termux-reload-settings
-clear
