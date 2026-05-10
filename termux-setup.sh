@@ -137,4 +137,20 @@ else
 fi
 
 touch ~/.hushlogin
+
+install_npm_global() {
+  local pkg="$1"
+  local binary="${2:-$pkg}"
+  if command -v "$binary" &>/dev/null; then
+    echo "$pkg already installed globally, skipping..."
+  else
+    echo "Installing $pkg globally..."
+    npm install -g "$pkg"
+  fi
+}
+
+# Installing global npm packages
+install_npm_global devmoji
+install_npm_global @google/gemini-cli gemini
+
 termux-reload-settings
