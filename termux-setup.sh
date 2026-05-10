@@ -91,7 +91,7 @@ shortcut.create-session = ctrl + t
 shortcut.previous-session = ctrl + (
 shortcut.next-session = ctrl + )
 shortcut.close-session = ctrl + q
-shortcut.rename-session = ctrl + `
+shortcut.rename-session = ctrl + \`
 extra-keys = []
 fullscreen = true
 EOF
