@@ -96,10 +96,15 @@ extra-keys = []
 fullscreen = true
 EOF
 
-curl -fLo JetBrainsMono.tar.xz "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
-tar -xf JetBrainsMono.tar.xz "JetBrainsMonoNerdFont-Regular.ttf"
-mv JetBrainsMonoNerdFont-Regular.ttf ~/.termux/font.ttf
-rm JetBrainsMono.tar.xz
+if [ -f ~/.termux/font.ttf ]; then
+  echo "JetBrains Mono font already installed, skipping..."
+else
+  echo "Installing JetBrains Mono font..."
+  curl -fLo JetBrainsMono.tar.xz "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+  tar -xf JetBrainsMono.tar.xz "JetBrainsMonoNerdFont-Regular.ttf"
+  mv JetBrainsMonoNerdFont-Regular.ttf ~/.termux/font.ttf
+  rm JetBrainsMono.tar.xz
+fi
 
 touch ~/.hushlogin
 termux-reload-settings
