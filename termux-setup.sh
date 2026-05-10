@@ -28,6 +28,7 @@ done
 clone() {
   local item_name="$1"
   local base_path="$2"
+  local shallow="$3"
 
   # Full URL
   if [[ "$item_name" =~ ^https?:// ]]; then
@@ -47,18 +48,20 @@ clone() {
   if [ -d "$item_dir" ]; then
     echo "$item_name directory $item_dir already exists. Skipping..."
   else
-    git clone "$repo_url" "$item_dir"
+    if [ "$shallow" = "true" ]; then
+      git clone --depth 10 "$repo_url" "$item_dir"
+    else
+      git clone "$repo_url" "$item_dir"
+    fi
   fi
 }
 
 mkdir -p ~/Code 
 clone omarchy-overrides ~/Code/omarchy-overrides
-clone basecamp/omarchy ~/Code/omarchy
+clone basecamp/omarchy ~/Code/omarchy true
 mkdir ~/.config
 clone neovim-kickstart-config-config ~/.config/nvim
 mkdir -p ~/Code/nvim-plugins
 clone bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
 clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
 clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
-
-ln -s ~/Code/nvim-plugins/
