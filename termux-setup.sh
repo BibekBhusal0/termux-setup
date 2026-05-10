@@ -10,10 +10,11 @@ packages=(
   neovim
   nodejs
   ripgrep
+  rust
   starship
   stylua
-  tmux
   termux-api
+  tmux
   xz-utils
   zoxide
   zsh
