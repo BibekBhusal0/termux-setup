@@ -1,5 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+# Installing required packages
 packages=(
   eza
   fd
@@ -23,3 +24,8 @@ for pkg in "${packages[@]}"; do
     pkg install -y "$pkg"
   fi
 done
+
+
+
+# cloning essential reposoteries.
+git clone https://github.com/basecamp/omarchy ~/omarchy --depth=10
