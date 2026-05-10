@@ -27,31 +27,26 @@ done
 
 clone() {
   local item_name="$1"
-  local base_path="$2"
+  local target_dir="$2"
   local shallow="$3"
 
-  # Full URL
+  # Determine repo URL
   if [[ "$item_name" =~ ^https?:// ]]; then
     repo_url="$item_name"
-    item_dir="${base_path}/$(basename "$repo_url" .git)"
-  # Username/reponame format
   elif [[ "$item_name" =~ / ]]; then
     repo_url="https://github.com/${item_name}.git"
-    item_dir="${base_path}/$(basename "$repo_url" .git)"
-  # Defaults to zsh-users owner
   else
     repo_url="https://github.com/bibekbhusal0/${item_name}.git"
-    item_dir="${base_path}/$(basename "$repo_url" .git)"
   fi
 
-  # Check if the item directory already exists
-  if [ -d "$item_dir" ]; then
-    echo "$item_name directory $item_dir already exists. Skipping..."
+  # Check if the target directory already exists
+  if [ -d "$target_dir" ]; then
+    echo "$item_name directory $target_dir already exists. Skipping..."
   else
     if [ "$shallow" = "true" ]; then
-      git clone --depth 10 "$repo_url" "$item_dir"
+      git clone --depth 10 "$repo_url" "$target_dir"
     else
-      git clone "$repo_url" "$item_dir"
+      git clone "$repo_url" "$target_dir"
     fi
   fi
 }
