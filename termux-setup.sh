@@ -16,6 +16,7 @@ packages=(
   termux-api
   xz-utils
   zoxide
+  zsh
 )
 
 for pkg in "${packages[@]}"; do
@@ -91,12 +92,29 @@ write_to_file() {
 }
 
 copy ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
+copy ~/Code/omarchy/config/git/config ~/.config/git/config
+
 mkdir -p ~/.config/tmux
 
 write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
 EOF
+
+# Set zsh as default shell if not already
+if [[ "$SHELL" != */zsh ]]; then
+  echo "Setting zsh as default shell..."
+  chsh -s zsh
+fi
+
+mkdir -p ~/.local/share/omarchy/default/
+ln -s ~/Code/omarchy/default/bash/ ~/.local/share/omarchy/default/bash
+
+write_to_file ~/.zshrc << EOF
+source ~/Code/omarchy-overrides/zsh/rc.sh
+EOF
+
+~/Code/omarchy-overrides/install/zsh-plugins.sh
 
 write_to_file ~/.termux/termux.properties "shortcut.create-session" << EOF
 shortcut.create-session = ctrl + t
