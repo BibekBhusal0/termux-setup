@@ -84,12 +84,30 @@ copy() {
 
 write_to_file() {
   local file="$1"
-  local pattern="$2"
-  if grep -qF "$pattern" "$file" 2>/dev/null; then
-    echo "Content already written to $file. Skipping ..."
+  local overwrite="${2:-false}"
+
+  local content_to_write
+  content_to_write=$(cat -)
+
+  local file_exists=false
+  if [ -f "$file" ]; then
+    file_exists=true
+  fi
+
+  if "$file_exists"; then
+    local existing_file_content=$(<"$file")
+    if [[ "$existing_file_content" == *"$content_to_write"* ]]; then
+      echo "Content already present in $file. Skipping ..."
+      return 0
+    fi
+  fi
+
+  if [ "$overwrite" = "true" ]; then
+    echo "$content_to_write" > "$file"
+    echo "Overwritten $file"
   else
-    cat >> "$file"
-    echo "Written in: $file"
+    echo "$content_to_write" >> "$file"
+    echo "Appended to: $file"
   fi
 }
 
@@ -99,7 +117,7 @@ copy ~/Code/omarchy/config/git/config ~/.config/git/config
 mkdir -p ~/.config/tmux
 
 write_to_file ~/.config/tmux/tmux.conf << EOF
-source ~/Code/omarchy/config/tmux/tmux.conf
+source ~/Code/omasrchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
 EOF
 
@@ -112,13 +130,14 @@ fi
 mkdir -p ~/.local/share/omarchy/default/
 ln -s ~/Code/omarchy/default/bash/ ~/.local/share/omarchy/default/bash
 
-write_to_file ~/.zshrc << EOF
+~/Code/omarchy-overrides/install/zsh-plugins.sh
+
+write_to_file ~/.zshrc true << EOF
 source ~/Code/omarchy-overrides/zsh/rc.sh
 EOF
 
-~/Code/omarchy-overrides/install/zsh-plugins.sh
 
-write_to_file ~/.termux/termux.properties "shortcut.create-session" << EOF
+write_to_file ~/.termux/termux.properties << EOF
 shortcut.create-session = ctrl + t
 shortcut.previous-session = ctrl + (
 shortcut.next-session = ctrl + )
