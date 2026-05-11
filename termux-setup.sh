@@ -189,7 +189,11 @@ fi
 echo "Installing Tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins || true
 
-termux-setup-storage
+if [ ! -d "$HOME/storage" ]; then
+  echo "Setting up storage..."
+  termux-setup-storage
+fi
+
 termux-reload-settings
 clear
 
