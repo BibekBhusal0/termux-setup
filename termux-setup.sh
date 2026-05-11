@@ -164,14 +164,13 @@ install_npm_global() {
 # Installing global npm packages
 install_npm_global devmoji
 install_npm_global @google/gemini-cli gemini
-
 echo "Installing Neovim plugins (headless)..."
 max_retries=5
 count=0
 success=false
 
 while [ $count -lt $max_retries ]; do
-  if nvim --headless "+Lazy! sync" +qa; then
+  if nvim --headless --cmd "let g:lazy_concurrency=1" "+Lazy! sync" +qa; then
     success=true
     break
   fi
