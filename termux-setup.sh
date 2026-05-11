@@ -183,11 +183,12 @@ install_npm_global() {
   fi
 }
 
-install_pkg nodejs
-
-# Installing global npm packages
-install_npm_global devmoji
-install_npm_global @google/gemini-cli gemini
+if ! command -v devmoji &>/dev/null || ! command -v gemini &>/dev/null; then
+  install_pkg nodejs
+  # Installing global npm packages
+  install_npm_global devmoji
+  install_npm_global @google/gemini-cli gemini
+fi
 
 echo "Installing Neovim plugins (headless)..."
 install_pkg rust
@@ -208,12 +209,11 @@ while [ $count -lt $max_retries ]; do
 done
 
 remove_pkg rust
+remove_pkg nodejs
 
 if [ "$success" = false ]; then
   echo "Warning: Neovim plugins failed to install after $max_retries attempts. Continuing setup..."
 fi
-
-remove_pkg nodejs
 
 echo "Installing Tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins || true
