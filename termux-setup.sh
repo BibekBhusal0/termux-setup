@@ -103,9 +103,9 @@ write_to_file() {
   fi
 }
 
-mkdir ~/.config/git/
-ln -s ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
-ln -s ~/Code/omarchy/config/git/config ~/.config/git/config
+mkdir -p ~/.config/git/
+ln -sf ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
+ln -sf ~/Code/omarchy/config/git/config ~/.config/git/config
 
 write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
@@ -196,8 +196,4 @@ fi
 termux-reload-settings
 clear
 
-echo "Setup almost complete, Next steps"
-echo "  - Open Gemini CLI and login"
-echo "  - Setup Git with auth token"
-echo "  - Restart termux"
-echo "  - Create symlink to obsidian directory (for using obsidian in neovim)"
+echo "Setup almost complete, Restart the termux  run command `nvim ~/Code/termux-setup/nextSteps.md` for next steps"
