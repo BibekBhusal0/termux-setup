@@ -107,7 +107,7 @@ ln -s ~/Code/omarchy/config/git/config ~/.config/git/config
 mkdir -p ~/.config/tmux
 
 write_to_file ~/.config/tmux/tmux.conf << EOF
-source ~/Code/omasrchy/config/tmux/tmux.conf
+source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
 EOF
 
