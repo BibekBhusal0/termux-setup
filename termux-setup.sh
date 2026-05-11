@@ -196,4 +196,4 @@ fi
 termux-reload-settings
 clear
 
-echo "Setup almost complete, Restart the termux  run command `nvim ~/Code/termux-setup/nextSteps.md` for next steps"
+echo "Setup almost complete, Restart the termux  run command 'nvim ~/Code/termux-setup/nextSteps.md' for next steps"
