@@ -68,6 +68,8 @@ clone bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
 clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
 clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
 clone termux-setup ~/Code/termux-setup
+mkdir -p ~/.termux/plugins
+clone tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
@@ -107,7 +109,6 @@ ln -s ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
 ln -s ~/Code/omarchy/config/git/config ~/.config/git/config
 
 mkdir -p ~/.config/tmux
-
 write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
