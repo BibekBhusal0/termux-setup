@@ -68,9 +68,11 @@ clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
 clone termux-setup ~/Code/termux-setup
 clone tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+cp ~/Code/omarchy/config/git/config ~/.gitconfig
 git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
 git config --global user.email "bibekbhusal04@gmail.com"
+source ~/Code/omarchy-overrides/git-config.sh
 
 write_to_file() {
   local file="$1"
@@ -105,7 +107,6 @@ write_to_file() {
 
 mkdir -p ~/.config/git/
 ln -sf ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
-ln -sf ~/Code/omarchy/config/git/config ~/.config/git/config
 
 write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
