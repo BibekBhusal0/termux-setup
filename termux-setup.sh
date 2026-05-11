@@ -166,7 +166,25 @@ install_npm_global devmoji
 install_npm_global @google/gemini-cli gemini
 
 echo "Installing Neovim plugins (headless)..."
-printf "y\n" | nvim --headless "+Lazy! sync" +qa || true
+max_retries=5
+count=0
+success=false
+
+while [ $count -lt $max_retries ]; do
+  if nvim --headless "+Lazy! sync" +qa; then
+    success=true
+    break
+  fi
+  count=$((count+1))
+  if [ $count -lt $max_retries ]; then
+    echo "Neovim plugin installation failed (Attempt $count). Retrying in 5 seconds..."
+    sleep 5
+  fi
+done
+
+if [ "$success" = false ]; then
+  echo "Warning: Neovim plugins failed to install after $max_retries attempts. Continuing setup..."
+fi
 
 echo "Installing Tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins || true
