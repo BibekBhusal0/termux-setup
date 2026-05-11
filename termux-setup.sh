@@ -65,6 +65,7 @@ mkdir -p ~/Code/nvim-plugins
 clone bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
 clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
 clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
+clone termux-setup ~/Code/termux-setup
 
 git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
