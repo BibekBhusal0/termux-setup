@@ -2,6 +2,7 @@
 
 # Installing required packages
 packages=(
+  bat
   eza
   fd
   fzf
