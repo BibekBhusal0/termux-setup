@@ -71,17 +71,6 @@ git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
 git config --global user.email "bibekbhusal04@gmail.com"
 
-copy() {
-  local src="$1"
-  local dest="$2"
-  if [ -f "$dest" ]; then
-    echo "File $dest already exists. Skipping copy ..."
-  else
-    cp "$src" "$dest"
-    echo "Copied $src to $dest"
-  fi
-}
-
 write_to_file() {
   local file="$1"
   local overwrite="${2:-false}"
@@ -111,8 +100,9 @@ write_to_file() {
   fi
 }
 
-copy ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
-copy ~/Code/omarchy/config/git/config ~/.config/git/config
+mkdir ~/.config/git/
+ln -s ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
+ln -s ~/Code/omarchy/config/git/config ~/.config/git/config
 
 mkdir -p ~/.config/tmux
 
