@@ -6,6 +6,7 @@ packages=(
   eza
   fd
   fzf
+  gh
   git
   lua-language-server
   neovim
