@@ -1,5 +1,32 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+is_pkg_installed() {
+  pkg list-installed "$1" 2>/dev/null | grep -q "^$1/"
+}
+
+install_pkg() {
+  if is_pkg_installed "$1"; then
+    echo "$1 already installed, skipping..."
+  else
+    echo "Installing $1..."
+    pkg install -y "$1"
+  fi
+}
+
+remove_pkg() {
+  if is_pkg_installed "$1"; then
+    echo "Removing $1..."
+    pkg uninstall -y "$1"
+  else
+    echo "$1 not installed, skipping removal..."
+  fi
+}
+
+echo "Removing unnecessary pre-installed packages..."
+for bloat in nano ed inetutils command-not-found; do
+  remove_pkg "$bloat"
+done
+
 # Installing required packages
 packages=(
   bat
@@ -10,25 +37,17 @@ packages=(
   git
   lua-language-server
   neovim
-  nodejs
   ripgrep
-  rust
   starship
   stylua
   termux-api
   tmux
-  xz-utils
   zoxide
   zsh
 )
 
 for pkg in "${packages[@]}"; do
-  if pkg list-installed 2>/dev/null | grep -q "^$pkg/"; then
-    echo "$pkg already installed, skipping..."
-  else
-    echo "Installing $pkg"
-    pkg install -y "$pkg"
-  fi
+  install_pkg "$pkg"
 done
 
 # Cloning required projects
@@ -143,10 +162,12 @@ if [ -f ~/.termux/font.ttf ]; then
   echo "JetBrains Mono font already installed, skipping..."
 else
   echo "Installing JetBrains Mono font..."
+  # install_pkg xz-utils
   curl -fLo JetBrainsMono.tar.xz "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
   tar -xf JetBrainsMono.tar.xz "JetBrainsMonoNerdFont-Regular.ttf"
   mv JetBrainsMonoNerdFont-Regular.ttf ~/.termux/font.ttf
   rm JetBrainsMono.tar.xz
+  # remove_pkg xz-utils
 fi
 
 touch ~/.hushlogin
@@ -162,10 +183,14 @@ install_npm_global() {
   fi
 }
 
+install_pkg nodejs
+
 # Installing global npm packages
 install_npm_global devmoji
 install_npm_global @google/gemini-cli gemini
+
 echo "Installing Neovim plugins (headless)..."
+install_pkg rust
 max_retries=5
 count=0
 success=false
@@ -182,9 +207,13 @@ while [ $count -lt $max_retries ]; do
   fi
 done
 
+remove_pkg rust
+
 if [ "$success" = false ]; then
   echo "Warning: Neovim plugins failed to install after $max_retries attempts. Continuing setup..."
 fi
+
+remove_pkg nodejs
 
 echo "Installing Tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins || true
