@@ -50,6 +50,7 @@ clone() {
   if [ -d "$target_dir" ]; then
     echo "$item_name directory $target_dir already exists. Skipping..."
   else
+    mkdir -p "$(dirname "$target_dir")"
     if [ "$shallow" = "true" ]; then
       git clone --depth 10 "$repo_url" "$target_dir"
     else
@@ -58,17 +59,13 @@ clone() {
   fi
 }
 
-mkdir -p ~/Code 
 clone omarchy-overrides ~/Code/omarchy-overrides
 clone basecamp/omarchy ~/Code/omarchy true
-mkdir ~/.config
 clone neovim-kickstart-config-config ~/.config/nvim
-mkdir -p ~/Code/nvim-plugins
 clone bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
 clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
 clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
 clone termux-setup ~/Code/termux-setup
-mkdir -p ~/.termux/plugins
 clone tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 git config --global credential.helper store
@@ -78,6 +75,8 @@ git config --global user.email "bibekbhusal04@gmail.com"
 write_to_file() {
   local file="$1"
   local overwrite="${2:-false}"
+
+  mkdir -p "$(dirname "$file")"
 
   local content_to_write
   content_to_write=$(cat -)
@@ -108,7 +107,6 @@ mkdir ~/.config/git/
 ln -s ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
 ln -s ~/Code/omarchy/config/git/config ~/.config/git/config
 
-mkdir -p ~/.config/tmux
 write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
