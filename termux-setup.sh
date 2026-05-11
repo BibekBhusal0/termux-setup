@@ -224,6 +224,8 @@ if [ ! -d "$HOME/storage" ]; then
 fi
 
 termux-reload-settings
+apt autoremove -y
+pkg clean -y
 clear
 
 echo "Setup almost complete, Restart the termux  run command 'nvim ~/Code/termux-setup/nextSteps.md' for next steps"
