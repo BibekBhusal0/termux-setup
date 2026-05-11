@@ -17,6 +17,6 @@ gh auth login
 ## 3. Create Obsidian Symlink
 Create a symlink from Obsidian vault to Documents to use obsidian nvim plugin.
 ```bash
-mkdir ~/Documents/vault
+mkdir -p ~/Documents/
 ln -s ~/storage/shared/obsidian/vault ~/Documents/vault
 ```
