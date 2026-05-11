@@ -165,11 +165,14 @@ install_npm_global() {
 install_npm_global devmoji
 install_npm_global @google/gemini-cli gemini
 
+termux-setup-storage
 termux-reload-settings
 clear
 
 echo "Setup almost complete, Next steps"
 echo "  - Open neovim to install all the packages"
+echo "  - Open Tmux and install the packages"
 echo "  - Open Gemini CLI and login"
 echo "  - Setup Git with auth token"
-echo "  - Give storage permission and create symlink to obsidian directory (for using obsidian in neovim)"
+echo "  - Restart termux"
+echo "  - Create symlink to obsidian directory (for using obsidian in neovim)"
