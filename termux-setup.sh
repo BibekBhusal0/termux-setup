@@ -44,7 +44,7 @@ packages=(
   tmux
   zoxide
   zsh
-  node
+  nodejs
 )
 
 for pkg in "${packages[@]}"; do
