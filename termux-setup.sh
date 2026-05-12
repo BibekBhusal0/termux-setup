@@ -44,6 +44,7 @@ packages=(
   tmux
   zoxide
   zsh
+  node
 )
 
 for pkg in "${packages[@]}"; do
@@ -184,7 +185,6 @@ install_npm_global() {
 }
 
 if ! command -v devmoji &>/dev/null || ! command -v gemini &>/dev/null; then
-  install_pkg nodejs
   # Installing global npm packages
   install_npm_global devmoji
   install_npm_global @google/gemini-cli gemini
@@ -209,7 +209,6 @@ while [ $count -lt $max_retries ]; do
 done
 
 remove_pkg rust
-remove_pkg nodejs
 
 if [ "$success" = false ]; then
   echo "Warning: Neovim plugins failed to install after $max_retries attempts. Continuing setup..."
