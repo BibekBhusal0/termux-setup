@@ -20,3 +20,9 @@ Create a symlink from Obsidian vault to Documents to use obsidian nvim plugin.
 mkdir -p ~/Documents/
 ln -s ~/storage/shared/obsidian/vault ~/Documents/vault
 ```
+
+## 4. Set hostname for SSH
+In file ~/.zshrc
+```zsh
+export HOSTNAME="green-phone"
+```

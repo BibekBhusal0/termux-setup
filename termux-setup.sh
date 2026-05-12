@@ -88,6 +88,7 @@ clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
 clone termux-setup ~/Code/termux-setup
 clone tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+mkdir -p ~/.config/git/
 cp ~/Code/omarchy/config/git/config ~/.gitconfig
 git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
@@ -125,8 +126,18 @@ write_to_file() {
   fi
 }
 
-mkdir -p ~/.config/git/
-ln -sf ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
+mkdir -p ~/.config
+cp ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
+
+write_to_file ~/.config/starship.toml <<'EOF'
+[custom.device]
+command = 'echo "${HOSTNAME:-phone}"'
+when = 'test -n "$SSH_TTY"'
+format = "[@$output]($style) "
+style = "bold yellow"
+EOF
+
+sed -i 's/format = "\[$directory$git_branch$git_status\]($style)$character"/format = "[$custom$directory$git_branch$git_status]($style)$character"/' ~/.config/starship.toml
 
 write_to_file ~/.config/tmux/tmux.conf << EOF
 source ~/Code/omarchy/config/tmux/tmux.conf
