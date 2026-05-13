@@ -153,7 +153,7 @@ fi
 mkdir -p ~/.local/share/omarchy/default/
 ln -s ~/Code/omarchy/default/bash/ ~/.local/share/omarchy/default/bash
 
-~/Code/omarchy-overrides/install/zsh-plugins.sh
+source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
 write_to_file ~/.zshrc true << EOF
 source ~/Code/omarchy-overrides/zsh/rc.sh
@@ -201,29 +201,9 @@ if ! command -v devmoji &>/dev/null || ! command -v gemini &>/dev/null; then
   install_npm_global @google/gemini-cli gemini
 fi
 
-echo "Installing Neovim plugins (headless)..."
 install_pkg rust
-max_retries=5
-count=0
-success=false
-
-while [ $count -lt $max_retries ]; do
-  if nvim --headless --cmd "let g:lazy_concurrency=1" "+Lazy! sync" +qa; then
-    success=true
-    break
-  fi
-  count=$((count+1))
-  if [ $count -lt $max_retries ]; then
-    echo "Neovim plugin installation failed (Attempt $count). Retrying in 5 seconds..."
-    sleep 5
-  fi
-done
-
+source ~/Code/omarchy-overrides/overwrite/nvim-plugis.sh
 remove_pkg rust
-
-if [ "$success" = false ]; then
-  echo "Warning: Neovim plugins failed to install after $max_retries attempts. Continuing setup..."
-fi
 
 echo "Installing Tmux plugins..."
 ~/.tmux/plugins/tpm/bin/install_plugins || true
