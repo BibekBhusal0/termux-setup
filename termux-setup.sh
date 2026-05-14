@@ -161,7 +161,8 @@ EOF
 
 
 write_to_file ~/.termux/termux.properties << EOF
-shortcut.create-session = ctrl + t
+
+shortcut.create-session = ctrl + ~
 shortcut.previous-session = ctrl + (
 shortcut.next-session = ctrl + )
 shortcut.close-session = ctrl + q
