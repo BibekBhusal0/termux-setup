@@ -52,41 +52,21 @@ for pkg in "${packages[@]}"; do
 done
 
 # Cloning required projects
-clone() {
-  local item_name="$1"
-  local target_dir="$2"
-  local shallow="$3"
+if [ ! -d "$HOME/Code/omarchy-overrides" ]; then
+  git clone https://github.com/bibekbhusal0/omarchy-overrides.git ~/Code/omarchy-overrides
+fi
 
-  # Determine repo URL
-  if [[ "$item_name" =~ ^https?:// ]]; then
-    repo_url="$item_name"
-  elif [[ "$item_name" =~ / ]]; then
-    repo_url="https://github.com/${item_name}.git"
-  else
-    repo_url="https://github.com/bibekbhusal0/${item_name}.git"
-  fi
+# Source utility functions
+source ~/Code/omarchy-overrides/utils/clone.sh
+source ~/Code/omarchy-overrides/utils/write-to-file.sh
 
-  # Check if the target directory already exists
-  if [ -d "$target_dir" ]; then
-    echo "$item_name directory $target_dir already exists. Skipping..."
-  else
-    mkdir -p "$(dirname "$target_dir")"
-    if [ "$shallow" = "true" ]; then
-      git clone --depth 10 "$repo_url" "$target_dir"
-    else
-      git clone "$repo_url" "$target_dir"
-    fi
-  fi
-}
-
-clone omarchy-overrides ~/Code/omarchy-overrides
-clone basecamp/omarchy ~/Code/omarchy true
-clone neovim-kickstart-config-config ~/.config/nvim
-clone bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
-clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
-clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
-clone termux-setup ~/Code/termux-setup
-clone tmux-plugins/tpm ~/.tmux/plugins/tpm
+clone_repo basecamp/omarchy ~/Code/omarchy --depth 10
+clone_repo neovim-kickstart-config-config ~/.config/nvim
+clone_repo bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
+clone_repo nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
+clone_repo nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
+clone_repo termux-setup ~/Code/termux-setup
+clone_repo tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 mkdir -p ~/.config/git/
 cp ~/Code/omarchy/config/git/config ~/.gitconfig
@@ -94,37 +74,6 @@ git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
 git config --global user.email "bibekbhusal04@gmail.com"
 source ~/Code/omarchy-overrides/git-config.sh
-
-write_to_file() {
-  local file="$1"
-  local overwrite="${2:-false}"
-
-  mkdir -p "$(dirname "$file")"
-
-  local content_to_write
-  content_to_write=$(cat -)
-
-  local file_exists=false
-  if [ -f "$file" ]; then
-    file_exists=true
-  fi
-
-  if "$file_exists"; then
-    local existing_file_content=$(<"$file")
-    if [[ "$existing_file_content" == *"$content_to_write"* ]]; then
-      echo "Content already present in $file. Skipping ..."
-      return 0
-    fi
-  fi
-
-  if [ "$overwrite" = "true" ]; then
-    echo "$content_to_write" > "$file"
-    echo "Overwritten $file"
-  else
-    echo "$content_to_write" >> "$file"
-    echo "Appended to: $file"
-  fi
-}
 
 mkdir -p ~/.config
 cp ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
