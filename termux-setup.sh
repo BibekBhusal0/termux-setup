@@ -85,20 +85,16 @@ source ~/Code/omarchy-overrides/git-config.sh
 mkdir -p ~/.config
 cp ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
 
-write_to_file ~/.config/starship.toml <<'EOF'
-[custom.device]
-command = 'echo "${HOSTNAME:-phone}"'
-when = 'test -n "$SSH_TTY"'
-format = "[@$output]($style) "
-style = "bold yellow"
-EOF
+write_to_file ~/.config/starship.toml "[custom.device]
+command = 'echo \"\${HOSTNAME:-phone}\"'
+when = 'test -n \"\$SSH_TTY\"'
+format = \"[@\$output](\$style) \"
+style = \"bold yellow\""
 
 sed -i 's/format = "\[$directory$git_branch$git_status\]($style)$character"/format = "[$custom$directory$git_branch$git_status]($style)$character"/' ~/.config/starship.toml
 
-write_to_file ~/.config/tmux/tmux.conf << EOF
-source ~/Code/omarchy/config/tmux/tmux.conf
-source ~/Code/omarchy-overrides/overwrite/tmux.conf
-EOF
+write_to_file ~/.config/tmux/tmux.conf "source ~/Code/omarchy/config/tmux/tmux.conf
+source ~/Code/omarchy-overrides/overwrite/tmux.conf"
 
 # Set zsh as default shell if not already
 if [[ "$SHELL" != */zsh ]]; then
@@ -111,21 +107,16 @@ ln -s ~/Code/omarchy/ ~/.local/share/omarchy
 
 source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
-write_to_file ~/.zshrc true << EOF
-source ~/Code/omarchy-overrides/zsh/rc.sh
-EOF
+write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh" true
 
-
-write_to_file ~/.termux/termux.properties << EOF
-
+write_to_file ~/.termux/termux.properties "
 shortcut.create-session = ctrl + ~
 shortcut.previous-session = ctrl + (
 shortcut.next-session = ctrl + )
 shortcut.close-session = ctrl + q
 shortcut.rename-session = ctrl + \`
 extra-keys = []
-fullscreen = true
-EOF
+fullscreen = true"
 
 if [ -f ~/.termux/font.ttf ]; then
   echo "JetBrains Mono font already installed, skipping..."
