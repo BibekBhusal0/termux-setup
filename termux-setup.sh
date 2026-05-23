@@ -73,7 +73,6 @@ clone_repo bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
 clone_repo nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
 clone_repo nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
 clone_repo termux-setup ~/Code/termux-setup
-clone_repo tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 mkdir -p ~/.config/git/
 cp ~/Code/omarchy/config/git/config ~/.gitconfig
@@ -154,9 +153,6 @@ fi
 install_pkg rust
 source ~/Code/omarchy-overrides/overwrite/nvim-plugis.sh
 remove_pkg rust
-
-echo "Installing Tmux plugins..."
-~/.tmux/plugins/tpm/bin/install_plugins || true
 
 if [ ! -d "$HOME/storage" ]; then
   echo "Setting up storage..."
