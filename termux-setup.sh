@@ -119,6 +119,15 @@ shortcut.rename-session = ctrl + \`
 extra-keys = []
 fullscreen = true"
 
+write_to_file ~/.bashrc "
+[[ $- != *i* ]] && return
+source ~/.local/share/omarchy/default/bash/envs
+source ~/.local/share/omarchy/default/bash/shell
+source ~/.local/share/omarchy/default/bash/aliases
+source ~/.local/share/omarchy/default/bash/init
+source ~/Code/omarchy-overrides/overwrite/bashrc
+"
+
 if [ -f ~/.termux/font.ttf ]; then
   echo "JetBrains Mono font already installed, skipping..."
 else
