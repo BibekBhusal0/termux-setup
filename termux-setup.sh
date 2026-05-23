@@ -108,7 +108,8 @@ ln -s ~/Code/omarchy/ ~/.local/share/omarchy
 
 source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
-write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh" true
+write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh
+export PATH=\$(echo \"\$PATH\" | sed -e \"s|:\$OMARCHY_PATH/bin||g\" -e \"s|\$OMARCHY_PATH/bin:||g\")" true
 
 write_to_file ~/.termux/termux.properties "
 shortcut.create-session = ctrl + ~
@@ -119,14 +120,13 @@ shortcut.rename-session = ctrl + \`
 extra-keys = []
 fullscreen = true"
 
-write_to_file ~/.bashrc "
-[[ $- != *i* ]] && return
+write_to_file ~/.bashrc "[[ $- != *i* ]] && return
 source ~/.local/share/omarchy/default/bash/envs
 source ~/.local/share/omarchy/default/bash/shell
 source ~/.local/share/omarchy/default/bash/aliases
 source ~/.local/share/omarchy/default/bash/init
 source ~/Code/omarchy-overrides/overwrite/bashrc
-"
+export PATH=\$(echo \"\$PATH\" | sed -e \"s|:\$OMARCHY_PATH/bin||g\" -e \"s|\$OMARCHY_PATH/bin:||g\")"
 
 if [ -f ~/.termux/font.ttf ]; then
   echo "JetBrains Mono font already installed, skipping..."
