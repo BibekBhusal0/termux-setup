@@ -119,11 +119,11 @@ write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh
 export PATH=\$(echo \"\$PATH\" | sed -e \"s|:\$OMARCHY_PATH/bin||g\" -e \"s|\$OMARCHY_PATH/bin:||g\")" true
 
 write_to_file ~/.termux/termux.properties "
-shortcut.create-session = ctrl + ~
+shortcut.rename-session = ctrl + ~
 shortcut.previous-session = ctrl + (
 shortcut.next-session = ctrl + )
 shortcut.close-session = ctrl + q
-shortcut.rename-session = ctrl + \`
+shortcut.create-session = ctrl + \`
 extra-keys = []
 fullscreen = true"
 
