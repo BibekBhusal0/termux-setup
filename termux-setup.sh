@@ -120,8 +120,7 @@ shortcut.rename-session = ctrl + \`
 extra-keys = []
 fullscreen = true"
 
-write_to_file ~/.bashrc "[[ $- != *i* ]] && return
-source ~/.local/share/omarchy/default/bash/envs
+write_to_file ~/.bashrc "source ~/.local/share/omarchy/default/bash/envs
 source ~/.local/share/omarchy/default/bash/shell
 source ~/.local/share/omarchy/default/bash/aliases
 source ~/.local/share/omarchy/default/bash/init
