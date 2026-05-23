@@ -37,14 +37,15 @@ packages=(
   git
   lua-language-server
   neovim
+  nodejs
   ripgrep
+  ruby
   starship
   stylua
   termux-api
   tmux
   zoxide
   zsh
-  nodejs
 )
 
 for pkg in "${packages[@]}"; do
@@ -92,6 +93,12 @@ style = \"bold yellow\""
 
 sed -i 's/format = "\[$directory$git_branch$git_status\]($style)$character"/format = "[$custom$directory$git_branch$git_status]($style)$character"/' ~/.config/starship.toml
 
+if command -v tmuxinator &>/dev/null; then
+  echo "tmuxinator already installed, skipping..."
+else
+  echo "Installing tmuxinator..."
+  gem install tmuxinator
+fi
 write_to_file ~/.config/tmux/tmux.conf "source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
 bind-key ? list-keys -N
