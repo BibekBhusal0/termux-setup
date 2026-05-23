@@ -104,7 +104,7 @@ if [[ "$SHELL" != */zsh ]]; then
 fi
 
 mkdir -p ~/.local/share
-ln -s ~/Code/omarchy/ ~/.local/share/omarchy
+ln -sfn ~/Code/omarchy ~/.local/share/omarchy
 
 source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
