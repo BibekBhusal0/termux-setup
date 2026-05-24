@@ -110,13 +110,12 @@ if [[ "$SHELL" != */zsh ]]; then
   chsh -s zsh
 fi
 
-mkdir -p ~/.local/share
-ln -sfn ~/Code/omarchy ~/.local/share/omarchy
+mkdir -p ~/.local/share/omarchy/default
+ln -sfn ~/Code/omarchy/default/bash ~/.local/share/omarchy/default/bash
 
 source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
-write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh
-export PATH=\$(echo \"\$PATH\" | sed -e \"s|:\$OMARCHY_PATH/bin||g\" -e \"s|\$OMARCHY_PATH/bin:||g\")" true
+write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh"
 
 write_to_file ~/.termux/termux.properties "
 shortcut.rename-session = ctrl + ~
@@ -132,7 +131,7 @@ source ~/.local/share/omarchy/default/bash/shell
 source ~/.local/share/omarchy/default/bash/aliases
 source ~/.local/share/omarchy/default/bash/init
 source ~/Code/omarchy-overrides/overwrite/bashrc
-export PATH=\$(echo \"\$PATH\" | sed -e \"s|:\$OMARCHY_PATH/bin||g\" -e \"s|\$OMARCHY_PATH/bin:||g\")"
+"
 
 if [ -f ~/.termux/font.ttf ]; then
   echo "JetBrains Mono font already installed, skipping..."
