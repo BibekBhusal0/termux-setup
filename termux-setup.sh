@@ -101,8 +101,7 @@ else
 fi
 write_to_file ~/.config/tmux/tmux.conf "source ~/Code/omarchy/config/tmux/tmux.conf
 source ~/Code/omarchy-overrides/overwrite/tmux.conf
-bind-key ? list-keys -N
-"
+bind-key ? list-keys -N"
 
 # Set zsh as default shell if not already
 if [[ "$SHELL" != */zsh ]]; then
