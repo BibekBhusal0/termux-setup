@@ -22,20 +22,6 @@ remove_pkg() {
   fi
 }
 
-create_symlink() {
-  local src="$1" dest="$2"
-  if [ -L "$dest" ] && [ "$(readlink -f "$dest")" == "$(readlink -f "$src")" ]; then
-    echo "Symlink already correct: $dest"
-    return
-  fi
-  if [ -e "$dest" ] && [ ! -L "$dest" ]; then
-    echo "Backing up existing file: $dest"
-    mv "$dest" "$dest.bak"
-  fi
-  echo "Linking $src -> $dest"
-  mkdir -p "$(dirname "$dest")" && ln -sfn "$src" "$dest"
-}
-
 echo "Removing unnecessary pre-installed packages..."
 for bloat in nano ed inetutils command-not-found; do
   remove_pkg "$bloat"
@@ -81,6 +67,7 @@ fi
 # Source utility functions
 source ~/Code/omarchy-overrides/utils/clone.sh
 source ~/Code/omarchy-overrides/utils/write-to-file.sh
+source ~/Code/omarchy-overrides/utils/symlink.sh
 source ~/Code/omarchy-overrides/install/my-bins.sh
 
 clone_repo basecamp/omarchy ~/Code/omarchy --depth 10
@@ -113,8 +100,7 @@ if [[ "$SHELL" != */zsh ]]; then
   chsh -s zsh
 fi
 
-mkdir -p ~/.local/share/omarchy/default
-ln -sfn ~/Code/omarchy/default/bash ~/.local/share/omarchy/default/bash
+create_symlink ~/Code/omarchy/default/bash ~/.local/share/omarchy/default/bash
 
 source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
