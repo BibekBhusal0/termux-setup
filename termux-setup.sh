@@ -81,6 +81,7 @@ fi
 # Source utility functions
 source ~/Code/omarchy-overrides/utils/clone.sh
 source ~/Code/omarchy-overrides/utils/write-to-file.sh
+source ~/Code/omarchy-overrides/install/my-bins.sh
 
 clone_repo basecamp/omarchy ~/Code/omarchy --depth 10
 clone_repo neovim-kickstart-config-config ~/.config/nvim
