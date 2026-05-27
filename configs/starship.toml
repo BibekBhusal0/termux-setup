@@ -1,0 +1,44 @@
+add_newline = true
+command_timeout = 200
+
+format = """
+$custom\
+[](#cba6f7)$directory[](fg:#cba6f7 bg:#45475a)$git_branch$git_status[](#45475a)
+$character"""
+
+[directory]
+truncation_length = 2
+truncation_symbol = "…/"
+style = "bg:#cba6f7 fg:#1e1e2e"
+format = "[ $path ]($style)"
+repo_root_style = "bold fg:#1e1e2e bg:#cba6f7"
+repo_root_format = "[ $repo_root]($repo_root_style)[$path]($style)"
+
+[git_branch]
+symbol = ""
+style = "bg:#45475a fg:#cba6f7"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style = "bg:#45475a fg:#cba6f7"
+format = "[$all_status$ahead_behind]($style)"
+ahead      = "⇡${count} "
+diverged   = "⇕⇡${ahead_count}⇣${behind_count} "
+behind     = "⇣${count} "
+conflicted = " "
+up_to_date = " "
+untracked  = "? "
+modified   = " "
+stashed    = ""
+staged     = ""
+renamed    = ""
+deleted    = ""
+
+[character]
+error_symbol = "[✗](bold red) "
+success_symbol = "[❯](bold #cba6f7) "
+
+[custom.device]
+command = 'echo "${HOSTNAME:-phone}"'
+when = 'test -n "$SSH_TTY"'
+format = "[](#45475a)[@$output](bg:#45475a fg:#cdd6f4)[](#45475a) "

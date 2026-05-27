@@ -22,6 +22,20 @@ remove_pkg() {
   fi
 }
 
+create_symlink() {
+  local src="$1" dest="$2"
+  if [ -L "$dest" ] && [ "$(readlink -f "$dest")" == "$(readlink -f "$src")" ]; then
+    echo "Symlink already correct: $dest"
+    return
+  fi
+  if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+    echo "Backing up existing file: $dest"
+    mv "$dest" "$dest.bak"
+  fi
+  echo "Linking $src -> $dest"
+  mkdir -p "$(dirname "$dest")" && ln -sfn "$src" "$dest"
+}
+
 echo "Removing unnecessary pre-installed packages..."
 for bloat in nano ed inetutils command-not-found; do
   remove_pkg "$bloat"
@@ -82,16 +96,7 @@ git config --global user.name "Bibek Bhusal"
 git config --global user.email "bibekbhusal04@gmail.com"
 source ~/Code/omarchy-overrides/git-config.sh
 
-mkdir -p ~/.config
-cp ~/Code/omarchy/config/starship.toml ~/.config/starship.toml
-
-write_to_file ~/.config/starship.toml "[custom.device]
-command = 'echo \"\${HOSTNAME:-phone}\"'
-when = 'test -n \"\$SSH_TTY\"'
-format = \"[@\$output](\$style) \"
-style = \"bold yellow\""
-
-sed -i 's/format = "\[$directory$git_branch$git_status\]($style)$character"/format = "[$custom$directory$git_branch$git_status]($style)$character"/' ~/.config/starship.toml
+create_symlink ~/Code/termux-setup/configs/starship.toml ~/.config/starship.toml
 
 if command -v tmuxinator &>/dev/null; then
   echo "tmuxinator already installed, skipping..."
@@ -99,9 +104,7 @@ else
   echo "Installing tmuxinator..."
   gem install tmuxinator
 fi
-write_to_file ~/.config/tmux/tmux.conf "source ~/Code/omarchy/config/tmux/tmux.conf
-source ~/Code/omarchy-overrides/overwrite/tmux.conf
-bind-key ? list-keys -N"
+create_symlink ~/Code/termux-setup/configs/tmux.conf ~/.config/tmux/tmux.conf
 
 # Set zsh as default shell if not already
 if [[ "$SHELL" != */zsh ]]; then
@@ -116,21 +119,13 @@ source ~/Code/omarchy-overrides/install/zsh-plugins.sh
 
 write_to_file ~/.zshrc "source ~/Code/omarchy-overrides/zsh/rc.sh"
 
-write_to_file ~/.termux/termux.properties "
-shortcut.rename-session = ctrl + ~
-shortcut.previous-session = ctrl + (
-shortcut.next-session = ctrl + )
-shortcut.close-session = ctrl + q
-shortcut.create-session = ctrl + \`
-extra-keys = []
-fullscreen = true"
+create_symlink ~/Code/termux-setup/configs/termux.properties ~/.termux/termux.properties
 
 write_to_file ~/.bashrc "source ~/.local/share/omarchy/default/bash/envs
 source ~/.local/share/omarchy/default/bash/shell
 source ~/.local/share/omarchy/default/bash/aliases
 source ~/.local/share/omarchy/default/bash/init
-source ~/Code/omarchy-overrides/overwrite/bashrc
-"
+source ~/Code/omarchy-overrides/overwrite/bashrc"
 
 if [ -f ~/.termux/font.ttf ]; then
   echo "JetBrains Mono font already installed, skipping..."
