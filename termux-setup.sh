@@ -140,6 +140,7 @@ else
 fi
 
 touch ~/.hushlogin
+touch ~/.nomedia
 
 install_npm_global() {
   local pkg="$1"
