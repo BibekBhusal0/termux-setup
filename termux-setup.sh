@@ -70,12 +70,12 @@ source ~/Code/omarchy-overrides/utils/write-to-file.sh
 source ~/Code/omarchy-overrides/utils/symlink.sh
 source ~/Code/omarchy-overrides/install/my-bins.sh
 
-clone_repo basecamp/omarchy ~/Code/omarchy --depth 10
-clone_repo neovim-kickstart-config-config ~/.config/nvim
-clone_repo bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
-clone_repo nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
-clone_repo nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
-clone_repo termux-setup ~/Code/termux-setup
+clone basecamp/omarchy ~/Code/omarchy --depth 10
+clone neovim-kickstart-config-config ~/.config/nvim
+clone bufstack.nvim ~/Code/nvim-plugins/bufstack.nvim
+clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
+clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
+clone termux-setup ~/Code/termux-setup
 
 mkdir -p ~/.config/git/
 cp ~/Code/omarchy/config/git/config ~/.gitconfig
