@@ -147,7 +147,7 @@ if ! command -v devmoji &>/dev/null || ! command -v gemini &>/dev/null; then
 fi
 
 install_pkg rust
-source ~/Code/omarchy-overrides/overwrite/nvim-plugis.sh
+source ~/Code/omarchy-overrides/install/nvim-plugis.sh
 remove_pkg rust
 
 if [ ! -d "$HOME/storage" ]; then
