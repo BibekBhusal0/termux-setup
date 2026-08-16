@@ -57,13 +57,6 @@ if [ ! -d "$HOME/Code/omarchy-overrides" ]; then
   git clone https://github.com/bibekbhusal0/omarchy-overrides.git ~/Code/omarchy-overrides
 fi
 
-# Ensure we are on the branch that has the utils
-if [ ! -f "$HOME/Code/omarchy-overrides/utils/clone.sh" ]; then
-  echo "Utils not found, switching to hyprland-lua branch..."
-  git -C ~/Code/omarchy-overrides fetch origin hyprland-lua
-  git -C ~/Code/omarchy-overrides checkout hyprland-lua
-fi
-
 # Source utility functions
 source ~/Code/omarchy-overrides/utils/clone.sh
 source ~/Code/omarchy-overrides/utils/write-to-file.sh
