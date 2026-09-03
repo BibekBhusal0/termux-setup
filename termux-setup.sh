@@ -75,7 +75,7 @@ cp ~/Code/omarchy/config/git/config ~/.gitconfig
 git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
 git config --global user.email "bibekbhusal04@gmail.com"
-source ~/Code/omarchy-overrides/git-config.sh
+source ~/Code/omarchy-overrides/config/git.sh
 
 create_symlink ~/Code/termux-setup/configs/starship.toml ~/.config/starship.toml
 
