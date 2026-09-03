@@ -69,8 +69,6 @@ clone nvim-shadcn ~/Code/nvim-plugins/nvim-shadcn
 clone nvim-git-utils ~/Code/nvim-plugins/nvim-git-utils
 clone termux-setup ~/Code/termux-setup
 
-mkdir -p ~/.config/git/
-cp ~/Code/omarchy/config/git/config ~/.gitconfig
 git config --global credential.helper store
 git config --global user.name "Bibek Bhusal"
 git config --global user.email "bibekbhusal04@gmail.com"
